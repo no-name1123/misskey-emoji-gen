@@ -47,7 +47,7 @@ const isText = (v, min, max) => typeof v === 'string' && v.length >= min && v.le
 const isPositiveInt = (v) => Number.isInteger(v) && v >= 1;
 
 /**
- * config.json の内容を検査する(詳細設計 3.1)。
+ * config.json の内容を検査する。
  * @param {unknown} obj
  * @returns {string[]} エラーの一覧(空なら正しい)
  */
@@ -103,7 +103,7 @@ async function fetchWithTimeout(fetchFn, url, timeoutMs, options = {}) {
 }
 
 /**
- * config.json を取得して検査する(詳細設計 2.3)。
+ * config.json を取得して検査する。
  * @param {{ fetchFn?: typeof fetch, timeoutMs?: number }} [options]
  */
 export async function loadConfig({ fetchFn = globalThis.fetch, timeoutMs = FETCH_TIMEOUT_MS } = {}) {
@@ -156,7 +156,7 @@ async function registerFont(family, buffer, descriptors) {
 const webFontLoads = new Map();
 
 /**
- * Web フォントを丸ごと取得して登録する(詳細設計 2.4)。同じフォントは一度だけ取得する。
+ * Web フォントを丸ごと取得して登録する。同じフォントは一度だけ取得する。
  * @param {{ id: string, file: string }} font
  * @param {{ timeoutMs?: number }} [options]
  * @returns {Promise<string>} 登録名
@@ -181,7 +181,7 @@ export function loadWebFont(font, { timeoutMs = FETCH_TIMEOUT_MS } = {}) {
 }
 
 /**
- * 字形の判定用の空白フォントを登録する(詳細設計 2.6)。
+ * 字形の判定用の空白フォントを登録する。
  * @param {{ file: string }} blankFont
  * @param {{ timeoutMs?: number }} [options]
  */
@@ -214,7 +214,7 @@ let localSequence = 0;
 let currentLocalFace = null;
 
 /**
- * 利用者の手持ちフォントを検査して登録する(詳細設計 2.5)。ファイルは端末の外へ送らない。
+ * 利用者の手持ちフォントを検査して登録する。ファイルは端末の外へ送らない。
  * @param {File} file
  * @returns {Promise<{ family: string, fileName: string, format: string }>}
  */
@@ -239,7 +239,7 @@ export async function loadLocalFont(file) {
 }
 
 /**
- * 選んだフォントに字形がない文字を返す(詳細設計 2.6)。
+ * 選んだフォントに字形がない文字を返す。
  * 対象フォントの後ろに空白フォントを指定して幅を測り、幅が 0 の文字を字形がないと判断する。
  * @param {string[]} lines
  * @param {string} family

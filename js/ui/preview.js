@@ -2,7 +2,7 @@ import { FRAME_DELAY_MS } from '../core/motions.js';
 import { IMAGE_SIZE } from '../core/layout.js';
 
 /**
- * プレビューの表示と再生(詳細設計 2.10.3)。
+ * プレビューの表示と再生。
  * @param {{ large: HTMLCanvasElement, light: HTMLCanvasElement, dark: HTMLCanvasElement, overlay: HTMLElement }} elements
  */
 export function createPreview({ large, light, dark, overlay }) {

@@ -16,7 +16,7 @@ function yieldToEventLoop() {
 }
 
 /**
- * 保存用ファイルの生成とプレビュー用フレームの作成を管理する(詳細設計 2.10)。
+ * 保存用ファイルの生成とプレビュー用フレームの作成を管理する。
  * @param {{
  *   initialWorker: Worker,
  *   onFrames: (frames: { canvas?: HTMLCanvasElement, images?: ImageData[] } | null) => void,

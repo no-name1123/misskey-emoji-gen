@@ -14,7 +14,7 @@ self.addEventListener('message', async (event) => {
     const bytes = format === 'gif'
       ? encodeGif(pixels, width, height, delayMs)
       : await encodeApng(pixels, width, height, delayMs, deflate);
-    // ビューが大きなバッファーの一部を指していても余分なバイトを含めない(詳細設計 2.11)
+    // ビューが大きなバッファーの一部を指していても余分なバイトを含めない
     const data = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
     self.postMessage({ type: 'done', jobId, data, mime: format === 'gif' ? 'image/gif' : 'image/png' }, [data]);
   } catch (e) {

@@ -1,7 +1,7 @@
 export const WORKER_READY_TIMEOUT_MS = 10000;
 
 /**
- * 必要なブラウザ機能を調べ、不足している項目名の配列を返す(詳細設計 2.13)。
+ * 必要なブラウザ機能を調べ、不足している項目名の配列を返す。
  * @returns {string[]}
  */
 export function checkSupport() {

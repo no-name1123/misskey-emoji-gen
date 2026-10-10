@@ -26,7 +26,7 @@ const NUMBER_FIELDS = [
 const getPath = (obj, path) => path.split('.').reduce((o, k) => o[k], obj);
 
 /**
- * 入力欄の読み取りと表示の切り替え(詳細設計 5.3)。
+ * 入力欄の読み取りと表示の切り替え。
  * 色と数値は、項目ごとに直前の正しい値を持ち、正しくない入力のときはそれを使う。
  * @param {() => void} onChange 入力が変わったときに呼ぶ
  */
@@ -131,7 +131,7 @@ export function bindForm(onChange) {
       };
     },
 
-    /** 設定に応じて項目の有効・無効を切り替える(詳細設計 5.3) */
+    /** 設定に応じて項目の有効・無効を切り替える */
     updateEnabled(settings) {
       const gradient = settings.fill.type === 'gradient';
       setDisabled(['cl-color2-picker', 'cl-color2-text', 'cl-direction'], !gradient);
@@ -149,7 +149,7 @@ function setDisabled(ids, disabled) {
 }
 
 /**
- * 操作部の入力欄・ボタンをまとめて有効・無効にする(設定ファイル取得中など。詳細設計 5.1)。
+ * 操作部の入力欄・ボタンをまとめて有効・無効にする(設定ファイル取得中など)。
  * @param {HTMLElement} root
  * @param {boolean} disabled
  */

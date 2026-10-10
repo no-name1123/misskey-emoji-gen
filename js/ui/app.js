@@ -31,7 +31,7 @@ const SAVE_REASONS = {
 };
 
 /**
- * 保存できるかを判定する(詳細設計 2.14、基本設計 3.4)。
+ * 保存できるかを判定する。
  * @param {{ textResult: { ok: boolean }, fontState: string, fileNameResult: { ok: boolean },
  *   output: { state: string, key?: string }, currentKey: string }} state
  * @returns {{ ok: true } | { ok: false, reason: 'text'|'font'|'fileName'|'output' }}
@@ -45,7 +45,7 @@ export function canSave({ textResult, fontState, fileNameResult, output, current
 }
 
 /**
- * 画面を起動する(詳細設計 2.1 手順 7)。
+ * 画面を起動する。
  * @param {object} config config.json の内容
  * @param {Worker} worker 起動を確認した Worker
  */
@@ -188,7 +188,7 @@ export function startApp(config, worker) {
       clearMessage('E-101');
       fillFontOptions();
     } catch (e) {
-      // 失敗時は直前のフォントのままにする(要件 F-021 ②)
+      // 失敗時は直前のフォントのままにする
       showMessage(LOCAL_FONT_ERRORS[e.kind] ?? 'E-203');
       input.value = '';
     }
@@ -212,7 +212,7 @@ export function startApp(config, worker) {
   });
   $('fm-file').addEventListener('change', onLocalFontFile);
 
-  // ---- 字形の判定(詳細設計 2.6) ----
+  // ---- 字形の判定 ----
 
   function updateGlyphs() {
     const key = JSON.stringify([state.textResult.lines, family(), state.fontRef.state, state.blankState]);
