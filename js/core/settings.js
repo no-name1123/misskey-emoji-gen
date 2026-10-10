@@ -5,7 +5,7 @@ export const MAX_CHARS = 20;
 export const MAX_FILE_NAME = 64;
 export const DEFAULT_FILE_NAME = 'emoji';
 
-/** 絵文字設定の既定値(詳細設計 3.2)。`font` は起動時に config の既定フォントで決める */
+/** 絵文字設定の既定値。`font` は起動時に config の既定フォントで決める */
 export const DEFAULT_SETTINGS = Object.freeze({
   text: '了解',
   align: 'center',
@@ -19,7 +19,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
 });
 
 /**
- * 絵文字にする文字を検証する(詳細設計 2.2)。
+ * 絵文字にする文字を検証する。
  * @param {string} raw
  * @returns {{ ok: boolean, lines: string[], count: number, error?: 'empty'|'too_many_lines'|'too_many_chars' }}
  */
@@ -37,7 +37,7 @@ export function validateText(raw) {
 }
 
 /**
- * 保存するファイル名(拡張子を除く)を検証する(詳細設計 2.2、要件 F-019)。
+ * 保存するファイル名(拡張子を除く)を検証する。
  * @param {string} raw
  * @returns {{ ok: boolean, fileName?: string, error?: 'too_long'|'invalid_chars' }}
  */
@@ -75,7 +75,7 @@ export function parseIntInput(raw, min, max, fallback) {
 }
 
 /**
- * レイアウトの計算し直しが必要かを判断するキー(詳細設計 2.12)。
+ * レイアウトの計算し直しが必要かを判断するキー。
  * @param {object} settings EMOJI_SETTINGS
  * @param {string} family 使用中のフォントの登録名
  * @param {string} fontState 使用中のフォントの読み込み状態
@@ -98,7 +98,7 @@ export function layoutKey(settings, family, fontState) {
 }
 
 /**
- * 保存用ファイルの作り直しが必要かを判断するキー。ファイル名は含めない(詳細設計 2.12)。
+ * 保存用ファイルの作り直しが必要かを判断するキー。ファイル名は含めない。
  * @param {object} settings EMOJI_SETTINGS
  * @param {string} family
  * @param {string} fontState

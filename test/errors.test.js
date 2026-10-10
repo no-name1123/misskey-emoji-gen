@@ -2,15 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { MESSAGES, formatMessage } from '../js/ui/errors.js';
 
-const DESIGN_CODES = [
+const EXPECTED_CODES = [
   'I-001', 'E-001', 'E-101', 'E-201', 'E-202', 'E-203', 'E-301',
   'E-401', 'E-402', 'E-403', 'E-404', 'E-405', 'E-406', 'E-999',
   'W-001', 'W-002', 'W-003', 'W-004', 'W-005',
 ];
 
-test('詳細設計 6.1 のすべてのコードがあり、余分なコードがない', () => {
-  assert.deepEqual(Object.keys(MESSAGES).sort(), [...DESIGN_CODES].sort());
-  assert.equal(new Set(DESIGN_CODES).size, DESIGN_CODES.length);
+test('すべてのメッセージコードがあり、余分なコードがない', () => {
+  assert.deepEqual(Object.keys(MESSAGES).sort(), [...EXPECTED_CODES].sort());
+  assert.equal(new Set(EXPECTED_CODES).size, EXPECTED_CODES.length);
 });
 
 test('formatMessage は引数を埋める', () => {

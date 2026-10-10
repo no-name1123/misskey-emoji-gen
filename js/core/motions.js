@@ -25,7 +25,7 @@ export function frameCount(motion, speed) {
 }
 
 /**
- * 時刻 t(0 以上 1 未満)の変形を返す(詳細設計 2.8)。
+ * 時刻 t(0 以上 1 未満)の変形を返す。
  * @param {string} motion
  * @param {number} t
  * @param {{ rect: { left: number, right: number, width: number } }} ctx rect は画像中心を原点とする静止時の描画範囲
@@ -49,7 +49,7 @@ export function transformAt(motion, t, ctx) {
       tf.dy = SHAKE_Y * Math.sin(2 * Math.PI * 6 * t);
       break;
     case 'pulse':
-      // 拡大率を 1 以下にして、作業用 Canvas の画像を引き伸ばさない(基本設計 UB-3)
+      // 拡大率を 1 以下にして、作業用 Canvas の画像を引き伸ばさない
       tf.scale = 0.9 - 0.1 * Math.cos(2 * Math.PI * t);
       break;
     default:
@@ -91,7 +91,7 @@ const rotateHue = (hex, degrees) => {
 };
 
 /**
- * 時刻 t の文字色。虹色なら選んだ色の色相を 360 × t ずらす(詳細設計 2.8)。
+ * 時刻 t の文字色。虹色なら選んだ色の色相を 360 × t ずらす。
  * @param {string} motion
  * @param {number} t
  * @param {{ type: string, color1: string, color2: string, direction: string }} fill

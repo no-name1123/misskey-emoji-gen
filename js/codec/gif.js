@@ -29,7 +29,7 @@ function widestChannel(colors) {
       if (v < min) min = v;
       if (v > max) max = v;
     }
-    // 同じ幅なら R、G、B の順で先のものを採る(詳細設計 2.11)
+    // 同じ幅なら R、G、B の順で先のものを採る
     if (max - min > best.range) best = { channel: c, range: max - min };
   }
   return best;
@@ -63,7 +63,7 @@ function averageColor(colors) {
 }
 
 /**
- * 全フレームの不透明な画素から 255 色以下の色表を作る(重み付きメディアンカット法。詳細設計 2.11)。
+ * 全フレームの不透明な画素から 255 色以下の色表を作る(重み付きメディアンカット法)。
  * @param {Uint8Array[]|Uint8ClampedArray[]} frames RGBA の画素列
  * @returns {number[]} 0xRRGGBB の配列(1〜255 色)
  */
@@ -133,7 +133,7 @@ function toIndices(frame, palette, cache) {
 
 /**
  * GIF の LZW 圧縮(サブブロックに分ける前のバイト列)。
- * 符号長は「直前に割り当てた符号が 2^size に等しくなったとき」に増やす(詳細設計 2.11。Pillow で復号を確認した規則)。
+ * 符号長は「直前に割り当てた符号が 2^size に等しくなったとき」に増やす(Pillow で復号を確認した規則)。
  * @param {ArrayLike<number>} indices 色番号の列
  * @param {number} [minCodeSize]
  * @returns {Uint8Array}
@@ -205,7 +205,7 @@ function subBlocks(data) {
 const le16 = (v) => [v & 0xff, (v >> 8) & 0xff];
 
 /**
- * フレーム列から無限ループの GIF を作る(詳細設計 2.11)。
+ * フレーム列から無限ループの GIF を作る。
  * 色番号 0 を透明に使い、各フレームは表示前に背景に戻す(消去方法 2)。
  * @param {Uint8Array[]|Uint8ClampedArray[]} frames RGBA の画素列
  * @param {number} width
