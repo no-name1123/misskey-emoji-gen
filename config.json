@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "defaultFontId": "mplus-rounded",
+  "sizeWarningBytes": 1048576,
+  "blankFont": {
+    "file": "fonts/AdobeBlank2.woff2",
+    "licenseFile": "fonts/AdobeBlank2-OFL.txt"
+  },
+  "fonts": [
+    {
+      "id": "mplus-rounded",
+      "name": "M PLUS Rounded 1c",
+      "category": "丸ゴシック",
+      "file": "fonts/MPLUSRounded1c-ExtraBold.woff2",
+      "weightLabel": "ExtraBold",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/MPLUSRounded1c-OFL.txt",
+      "bytes": 1131956
+    },
+    {
+      "id": "noto-sans-jp",
+      "name": "Noto Sans JP",
+      "category": "ゴシック",
+      "file": "fonts/NotoSansJP-Black.woff2",
+      "weightLabel": "Black",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/NotoSansJP-OFL.txt",
+      "bytes": 2224488
+    },
+    {
+      "id": "noto-serif-jp",
+      "name": "Noto Serif JP",
+      "category": "明朝",
+      "file": "fonts/NotoSerifJP-Black.woff2",
+      "weightLabel": "Black",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/NotoSerifJP-OFL.txt",
+      "bytes": 2832396
+    },
+    {
+      "id": "dela-gothic-one",
+      "name": "Dela Gothic One",
+      "category": "極太",
+      "file": "fonts/DelaGothicOne-Regular.woff2",
+      "weightLabel": "Regular",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/DelaGothicOne-OFL.txt",
+      "bytes": 1186656
+    },
+    {
+      "id": "rocknroll-one",
+      "name": "RocknRoll One",
+      "category": "ポップ体",
+      "file": "fonts/RocknRollOne-Regular.woff2",
+      "weightLabel": "Regular",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/RocknRollOne-OFL.txt",
+      "bytes": 1165068
+    },
+    {
+      "id": "yomogi",
+      "name": "Yomogi",
+      "category": "手書き風",
+      "file": "fonts/Yomogi-Regular.woff2",
+      "weightLabel": "Regular",
+      "license": "OFL-1.1",
+      "licenseFile": "fonts/Yomogi-OFL.txt",
+      "bytes": 1735404
+    }
+  ]
+}
