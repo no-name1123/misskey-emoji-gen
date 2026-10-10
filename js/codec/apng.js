@@ -54,7 +54,7 @@ function addFilterBytes(rgba, width, height) {
 }
 
 /**
- * フレーム列から無限ループの APNG を作る(詳細設計 2.11)。
+ * フレーム列から無限ループの APNG を作る。
  * 各フレームは画像全体を blend_op = SOURCE で置き換えるため、透明部分に前のフレームが残らない。
  * @param {Uint8Array[]|Uint8ClampedArray[]} frames RGBA の画素列(各 width × height × 4 バイト)
  * @param {number} width
