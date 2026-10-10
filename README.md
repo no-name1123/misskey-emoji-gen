@@ -14,6 +14,24 @@ Misskey のカスタム絵文字に使う文字画像(文字絵文字)を、ブ�
 - 基本設計書:`02_basic_design.md`
 - 詳細設計書:`03_detailed_design.md`
 
+## 公開
+
+`main` に push すると、GitHub Actions(`.github/workflows/deploy.yml`)が `npm test` を実行し、成功したときだけ GitHub Pages に配置します。
+
+## フォントの追加・削除
+
+`fonts/` にフォントファイル(WOFF2)とライセンス文書を置き、`config.json` の `fonts` を編集します。手順は詳細設計 7.5 のとおりです。
+
+- 用意するフォントは SIL Open Font License 1.1 または Apache License 2.0 のものに限ります
+- 文字の範囲で分割(サブセット化)はしません(入力した文字が配信元から推測されないようにするため)
+- 1 ファイル 5MB 以下を目安にします
+
 ## 開発
 
 開発ルールは [web-tool-blog-document の docs/development-rules.md](https://github.com/no-name1123/web-tool-blog-document/blob/main/docs/development-rules.md) に従います。
+
+単体テストは Node.js 24 で次のコマンドで実行します(依存ライブラリはありません)。
+
+```sh
+npm test
+```
