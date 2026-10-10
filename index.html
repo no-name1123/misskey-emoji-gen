@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Misskey 文字絵文字メーカー</title>
+  <meta name="description" content="Misskey のカスタム絵文字に使う文字画像を、ブラウザだけで作成・保存できるサイトです。">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Misskey 文字絵文字メーカー</h1>
+  </header>
+
+  <div id="boot" class="boot" role="status">
+    <p id="boot-text">読み込み中です。表示が変わらない場合は、お使いのブラウザでは利用できません。Chrome・Edge・Safari・Firefox の最新版でお試しください。</p>
+    <button type="button" id="boot-reload" class="button" hidden>再読み込み</button>
+  </div>
+
+  <main id="app" class="app" hidden>
+    <div id="messages" class="messages" role="status" aria-live="polite"></div>
+
+    <div class="layout">
+      <div class="side">
+      <section class="panel preview-panel" aria-labelledby="preview-heading">
+        <h2 id="preview-heading">プレビュー</h2>
+        <div class="preview-large">
+          <canvas id="pv-large" width="128" height="128" aria-label="拡大プレビュー"></canvas>
+          <p id="pv-overlay" class="preview-overlay" hidden></p>
+        </div>
+        <div class="preview-small">
+          <div class="preview-chip light">
+            <canvas id="pv-light" width="128" height="128" aria-label="明るい背景での表示"></canvas>
+            <span>明るい背景</span>
+          </div>
+          <div class="preview-chip dark">
+            <canvas id="pv-dark" width="128" height="128" aria-label="暗い背景での表示"></canvas>
+            <span>暗い背景</span>
+          </div>
+        </div>
+        <p id="pv-glyph-warning" class="warning" hidden></p>
+      </section>
+      <section class="panel save-panel" aria-labelledby="save-heading">
+        <h2 id="save-heading">保存</h2>
+        <label for="sv-name">ファイル名(Misskey の絵文字名)</label>
+        <div class="file-name">
+          <input type="text" id="sv-name" placeholder="emoji" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <span id="sv-ext">.png</span>
+        </div>
+        <p id="sv-name-error" class="field-error" hidden></p>
+        <p id="sv-size" class="field-info"></p>
+        <p id="sv-size-warning" class="warning" hidden></p>
+        <button type="button" id="sv-save" class="button">保存</button>
+        <p id="sv-reason" class="field-info" hidden></p>
+        <button type="button" id="sv-retry" class="button secondary" hidden>もう一度生成</button>
+      </section>
+      </div>
+
+      <div class="settings">
+        <section class="panel" aria-labelledby="text-heading">
+          <h2 id="text-heading">文字</h2>
+          <label for="tx-text">絵文字にする文字(4 行・20 文字まで)</label>
+          <textarea id="tx-text" rows="4" spellcheck="false"></textarea>
+          <p class="field-info"><span id="tx-count">0 / 20 文字</span></p>
+          <p id="tx-error" class="field-error" hidden></p>
+          <fieldset>
+            <legend>行揃え</legend>
+            <label><input type="radio" name="align" value="left"> 左</label>
+            <label><input type="radio" name="align" value="center"> 中央</label>
+            <label><input type="radio" name="align" value="right"> 右</label>
+          </fieldset>
+        </section>
+
+        <section class="panel" aria-labelledby="font-heading">
+          <h2 id="font-heading">フォント</h2>
+          <label for="fm-font">フォント</label>
+          <select id="fm-font"></select>
+          <p id="fm-status" class="field-info" hidden></p>
+          <button type="button" id="fm-retry" class="button secondary" hidden>再試行</button>
+          <label for="fm-file" class="file-label">手持ちフォントを読み込む(TTF・OTF・WOFF・WOFF2、20MB まで)</label>
+          <input type="file" id="fm-file" accept=".ttf,.otf,.woff,.woff2">
+          <p class="field-info">読み込んだフォントは端末の中だけで使い、外部には送信しません。</p>
+        </section>
+
+        <section class="panel" aria-labelledby="color-heading">
+          <h2 id="color-heading">色・背景</h2>
+          <fieldset>
+            <legend>文字色</legend>
+            <label><input type="radio" name="fill-type" value="solid"> 単色</label>
+            <label><input type="radio" name="fill-type" value="gradient"> グラデーション</label>
+          </fieldset>
+          <div class="color-row" data-color="fill.color1">
+            <label for="cl-color1-text">色 1</label>
+            <input type="color" id="cl-color1-picker" aria-label="色 1 を選ぶ">
+            <input type="text" id="cl-color1-text" maxlength="7" autocomplete="off" spellcheck="false">
+            <p class="field-error" hidden></p>
+          </div>
+          <div class="color-row" data-color="fill.color2">
+            <label for="cl-color2-text">色 2</label>
+            <input type="color" id="cl-color2-picker" aria-label="色 2 を選ぶ">
+            <input type="text" id="cl-color2-text" maxlength="7" autocomplete="off" spellcheck="false">
+            <p class="field-error" hidden></p>
+          </div>
+          <label for="cl-direction">グラデーションの向き</label>
+          <select id="cl-direction">
+            <option value="vertical">縦</option>
+            <option value="horizontal">横</option>
+            <option value="diagonal">斜め</option>
+          </select>
+          <fieldset>
+            <legend>背景</legend>
+            <label><input type="radio" name="bg-type" value="transparent"> 透明</label>
+            <label><input type="radio" name="bg-type" value="solid"> 単色</label>
+          </fieldset>
+          <div class="color-row" data-color="background.color">
+            <label for="bg-color-text">背景色</label>
+            <input type="color" id="bg-color-picker" aria-label="背景色を選ぶ">
+            <input type="text" id="bg-color-text" maxlength="7" autocomplete="off" spellcheck="false">
+            <p class="field-error" hidden></p>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="deco-heading">
+          <h2 id="deco-heading">装飾</h2>
+          <label class="check"><input type="checkbox" id="ol-enabled"> 縁取り</label>
+          <div class="color-row" data-color="outline.color">
+            <label for="ol-color-text">縁取りの色</label>
+            <input type="color" id="ol-color-picker" aria-label="縁取りの色を選ぶ">
+            <input type="text" id="ol-color-text" maxlength="7" autocomplete="off" spellcheck="false">
+            <p class="field-error" hidden></p>
+          </div>
+          <label for="ol-width">縁取りの太さ <output id="ol-width-value" for="ol-width"></output></label>
+          <input type="range" id="ol-width" min="1" max="12" step="1">
+
+          <label class="check"><input type="checkbox" id="sh-enabled"> 影</label>
+          <div class="color-row" data-color="shadow.color">
+            <label for="sh-color-text">影の色</label>
+            <input type="color" id="sh-color-picker" aria-label="影の色を選ぶ">
+            <input type="text" id="sh-color-text" maxlength="7" autocomplete="off" spellcheck="false">
+            <p class="field-error" hidden></p>
+          </div>
+          <div class="number-row">
+            <label for="sh-dx">影のずれ(横)</label>
+            <input type="number" id="sh-dx" min="-10" max="10" step="1">
+            <label for="sh-dy">影のずれ(縦)</label>
+            <input type="number" id="sh-dy" min="-10" max="10" step="1">
+          </div>
+          <label for="sh-blur">影のぼかし <output id="sh-blur-value" for="sh-blur"></output></label>
+          <input type="range" id="sh-blur" min="0" max="10" step="1">
+        </section>
+
+        <section class="panel" aria-labelledby="motion-heading">
+          <h2 id="motion-heading">動き</h2>
+          <label for="mv-motion">動き</label>
+          <select id="mv-motion">
+            <option value="none">なし</option>
+            <option value="blink">点滅</option>
+            <option value="rotate">回転</option>
+            <option value="scroll">横スクロール</option>
+            <option value="shake">振動</option>
+            <option value="pulse">拡大縮小</option>
+            <option value="rainbow">虹色</option>
+          </select>
+          <p id="mv-warning" class="warning" hidden></p>
+          <fieldset id="mv-speed-group">
+            <legend>速さ</legend>
+            <label><input type="radio" name="speed" value="slow"> 遅い</label>
+            <label><input type="radio" name="speed" value="normal"> 普通</label>
+            <label><input type="radio" name="speed" value="fast"> 速い</label>
+          </fieldset>
+          <fieldset id="mv-format-group">
+            <legend>保存形式</legend>
+            <label><input type="radio" name="format" value="apng"> APNG</label>
+            <label><input type="radio" name="format" value="gif"> GIF</label>
+          </fieldset>
+          <p id="mv-format-warning" class="warning" hidden></p>
+        </section>
+      </div>
+
+    </div>
+
+    <details class="panel usage" id="ft-usage">
+      <summary>使い方・ライセンス</summary>
+      <h2>使い方</h2>
+      <ol>
+        <li>「文字」に絵文字にしたい文字を入力します(4 行・20 文字まで。改行で行を分けられます)。</li>
+        <li>フォント・色・縁取り・影・動きを選びます。プレビューの明るい背景・暗い背景で見え方を確認できます。</li>
+        <li>「ファイル名」に Misskey で使う絵文字名(半角英数字と _)を入力し、「保存」を押します。動きなしは PNG、動きありは APNG(拡張子 .png)または GIF で保存されます。</li>
+        <li>保存した画像を、Misskey のカスタム絵文字として登録(または管理者に登録を依頼)してください。</li>
+        <li>入力した文字や読み込んだフォントは、お使いの端末の中だけで処理され、外部には送信されません。</li>
+      </ol>
+      <h2>ライセンス</h2>
+      <ul id="ft-licenses"></ul>
+      <p>手持ちのフォントを使う場合は、そのフォントのライセンスに従ってください。</p>
+    </details>
+  </main>
+</body>
+</html>

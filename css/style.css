@@ -1,0 +1,389 @@
+:root {
+  --text: #1f2328;
+  --text-sub: #57606a;
+  --bg: #ffffff;
+  --panel: #f6f8fa;
+  --border: #d0d7de;
+  --primary: #0b62c4;
+  --primary-text: #ffffff;
+  --error: #b3261e;
+  --warning-text: #7a4b00;
+  --warning-bg: #fff4d6;
+  --preview-dark: #2b2b2b;
+  --preview-light: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  line-height: 1.6;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.site-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.boot {
+  max-width: 640px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.app {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 16px 32px;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* スマートフォンでは プレビュー → 設定 → 保存 の順に並べ、プレビューを上部に固定する */
+.side {
+  display: contents;
+}
+
+.preview-panel {
+  order: 1;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.settings {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.save-panel {
+  order: 3;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+
+  .settings {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 0;
+  }
+
+  .preview-panel {
+    position: static;
+  }
+}
+
+.panel {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+label,
+legend {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+fieldset {
+  margin: 8px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+fieldset label,
+label.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+textarea,
+select,
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+  color: var(--text);
+  background: #ffffff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.color-row {
+  display: grid;
+  grid-template-columns: auto 44px minmax(0, 7.5em);
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.color-row label {
+  margin: 0;
+}
+
+.color-row input[type="color"] {
+  width: 44px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.color-row .field-error {
+  grid-column: 1 / -1;
+}
+
+.number-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 6em);
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.number-row label {
+  margin: 0;
+}
+
+.field-info {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+.field-error {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--error);
+}
+
+.field-error.over {
+  color: var(--error);
+}
+
+.warning {
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--warning-text);
+  background: var(--warning-bg);
+}
+
+.button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 20px;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  font: inherit;
+  font-weight: bold;
+  color: var(--primary-text);
+  background: var(--primary);
+  cursor: pointer;
+}
+
+.button.secondary {
+  color: var(--primary);
+  background: #ffffff;
+}
+
+.button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.messages:empty {
+  display: none;
+}
+
+.messages {
+  margin-bottom: 12px;
+}
+
+.message {
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.message.info {
+  background: var(--panel);
+}
+
+.message.error {
+  color: var(--error);
+  background: #fdecea;
+}
+
+.message.warning {
+  color: var(--warning-text);
+  background: var(--warning-bg);
+}
+
+.message .button {
+  margin: 4px 0 0 8px;
+  padding: 2px 12px;
+}
+
+.preview-large {
+  position: relative;
+  width: 256px;
+  height: 256px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  /* 透明部分がわかるように市松模様にする */
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%),
+    linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+.preview-large canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.preview-small {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.preview-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.preview-chip.light {
+  color: #1f2328;
+  background: var(--preview-light);
+}
+
+.preview-chip.dark {
+  color: #f0f0f0;
+  background: var(--preview-dark);
+}
+
+.preview-chip canvas {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 767px) {
+  .preview-large {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.file-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.usage {
+  margin-top: 16px;
+}
+
+.usage summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.usage h2 {
+  margin-top: 12px;
+}
