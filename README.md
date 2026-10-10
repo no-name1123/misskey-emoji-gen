@@ -17,3 +17,9 @@ Misskey のカスタム絵文字に使う文字画像(文字絵文字)を、ブ�
 ## 開発
 
 開発ルールは [web-tool-blog-document の docs/development-rules.md](https://github.com/no-name1123/web-tool-blog-document/blob/main/docs/development-rules.md) に従います。
+
+単体テストは Node.js 24 で次のコマンドで実行します(依存ライブラリはありません)。
+
+```sh
+npm test
+```
