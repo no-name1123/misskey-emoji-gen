@@ -7,7 +7,7 @@ import { sweptRect } from '../js/core/motions.js';
 const measure = (s, text) => ({ left: 0, right: s * [...text].length, ascent: 0.8 * s, descent: 0.2 * s });
 const noDeco = { outline: 0, shadow: null };
 const sweepFor = (motion) => (rect) => sweptRect(motion, rect);
-// 枠の判定は各辺 ±0.001 の誤差を許す(詳細設計 2.7)ため、大きさの比較も 0.01 の誤差を許す
+// 枠の判定は各辺 ±0.001 の誤差を許すため、大きさの比較も 0.01 の誤差を許す
 const near = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} != ${b}`);
 
 function layout(lines, opts = {}) {

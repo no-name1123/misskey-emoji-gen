@@ -1,5 +1,5 @@
 /**
- * メッセージのコードと文言(詳細設計 6.1)。`<名前>` のような部分は formatMessage の引数で埋める。
+ * メッセージのコードと文言。`<名前>` のような部分は formatMessage の引数で埋める。
  * kind はメッセージ欄での扱い(error は role="alert" で出す)。
  */
 export const MESSAGES = Object.freeze({
@@ -24,7 +24,7 @@ export const MESSAGES = Object.freeze({
   'W-005': { kind: 'warning', text: '白・黒・灰色の文字色では、虹色にしても色が変わりません。色の付いた文字色を選んでください。' },
 });
 
-/** 設定ファイル・フォントの読み込み失敗の原因の文言(詳細設計 6.1 E-001・E-101) */
+/** 設定ファイル・フォントの読み込み失敗の原因の文言(E-001・E-101) */
 export const CAUSES = Object.freeze({
   network: '通信エラー',
   timeout: '時間切れ',

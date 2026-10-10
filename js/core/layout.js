@@ -18,7 +18,7 @@ function translateRect(r, dx, dy) {
 }
 
 /**
- * 文字の塊の矩形に縁取りと影の広がりを加えた、静止時の描画範囲を返す(詳細設計 2.7 手順 2)。
+ * 文字の塊の矩形に縁取りと影の広がりを加えた、静止時の描画範囲を返す。
  * @param {{ left: number, top: number, right: number, bottom: number }} textRect
  * @param {{ outline: number, shadow: { dx: number, dy: number, blur: number } | null }} deco
  */
@@ -56,7 +56,7 @@ function place(s, { lines, align, measure, deco }) {
 
   const textRect = makeRect(0, 0, blockWidth, blockHeight);
   const drawRect = decorationRect(textRect, deco);
-  // 静止時の描画範囲の中心を画像の中心に合わせる(基本設計 FN-02 ②)
+  // 静止時の描画範囲の中心を画像の中心に合わせる
   const dx = HALF - (drawRect.left + drawRect.right) / 2;
   const dy = HALF - (drawRect.top + drawRect.bottom) / 2;
   const movedDraw = translateRect(drawRect, dx, dy);
@@ -80,7 +80,7 @@ function fits(layout, sweep) {
 }
 
 /**
- * 文字が枠に収まる最大の大きさと各行の位置を求める(詳細設計 2.7)。
+ * 文字が枠に収まる最大の大きさと各行の位置を求める。
  * @param {{
  *   lines: string[],
  *   align: 'left'|'center'|'right',
